@@ -2,10 +2,15 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const db = require("./models/index");
 
 dotenv.config();
 
 const app = express();
+
+db.sequalize.sync({ force: true }).then(() => {
+  console.log("Drop and re-sync db.");
+});
 
 const corsOptions = {
   origin: "http://localhost:3000",
@@ -24,5 +29,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
+  console.log(process.env.DB_PASSWORD);
 });
