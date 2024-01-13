@@ -4,6 +4,8 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const db = require("./models/index");
 
+const routers = require("./routes/routes");
+
 dotenv.config();
 
 const app = express();
@@ -22,12 +24,10 @@ app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use("/api", routers);
+
 const PORT = process.env.PORT || 8080;
 
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
-});
-
 app.listen(PORT, () => {
-  console.log(process.env.DB_PASSWORD);
+  console.log("PORT =>", PORT);
 });
